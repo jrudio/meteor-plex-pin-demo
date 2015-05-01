@@ -1,0 +1,73 @@
+<head>
+  <title>pintest</title>
+</head>
+
+<body>
+  <h1>Welcome to the PlexPin Demo!</h1>
+    <p>
+      Do not try to authorize these pins with your account.
+      If you want to test authorization, then fork this project and do it locally as anyone who vists this page can see your authorization token.
+    </p>
+  <div>
+    {{> getPins }}
+  </div>
+  <div>
+    {{> serverPins}}
+  </div>
+  <div>
+    {{> clientPins}}
+  </div>
+</body>
+
+<template name="serverPins">
+  {{ #each serverPins }}
+    {{ > displayPins pinType='Server' pinClass='check-pin-server' pins=this }}
+  {{ /each }}
+</template>
+
+<template name="clientPins">
+  {{ #each clientPins }}
+    {{ > displayPins pinType='Client' pinClass='check-pin-client' pins=this }}
+  {{ /each }}
+</template>
+
+<template name="getPins">
+  <div>
+    <button class="get-pin-client">Get PIN via client</button>
+  </div>
+  <div>
+    <button class="get-pin-server">Get PIN via server</button>
+  </div>
+  <div>
+    <button class="deleteAll">Delete All Pins</button>
+  </div>
+</template>
+
+<template name="displayPins">
+  <div class="pins">
+
+    <h4>{{ pinType }}</h4>
+    {{ #with pins }}
+      <button class={{ ../pinClass }}>Check PIN via {{ ../pinType }}</button>
+
+      <p>
+        PIN: <b>{{ pin }}</b>
+      </p>
+      <p>
+        Request Id: <b>{{ requestId }}</b>
+      </p>
+      <p>
+        Expires In/Expired: <b>{{ fromNow expireTime }}</b>
+      </p>
+      <p>
+        Authorization Token: <b>{{ authToken }}</b>
+      </p>
+      <p>
+        Expired: <b>{{ expired }}</b>
+      </p>
+      <p>
+        authorized: <b>{{ authorized }}</b>
+      </p>
+    {{ /with }}
+  </div>
+</template>
